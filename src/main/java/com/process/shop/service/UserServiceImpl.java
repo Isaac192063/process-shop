@@ -3,44 +3,48 @@ package com.process.shop.service;
 import com.process.shop.model.Address;
 import com.process.shop.model.User;
 import com.process.shop.model.enums.DocumentType;
+import com.process.shop.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService{
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public User createUser(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
     public User getUserById(Long id) {
 
-        return User.builder().email("").
-                fullName("asa").
-                document("123").
-                identificationType(DocumentType.CC).
-                address(List.of(Address.builder().avenue("avenida 2").
-                                neighborhood("2").
-                                postalCode("32").
-                                street(" calle 4").
-                                build()))
-                .password("123456")
-                .phoneNumber("31060067981")
-                .birhtDate(new Date(2004,12,10))
-                .email("anonimus@gmail.com")
-                .build();
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()){
+            return null;
+        }
+        return user.get();
     }
 
     @Override
     public User updateUser(User user, Long id) {
-        return null;
+        Optional<User> userBD = userRepository.findById(id);
+        if (userBD.isEmpty()){
+            return null;
+        }
+        userBD.get().setFullName(user.getFullName());
+        userBD.get().setPhoneNumber(user.getPhoneNumber());
+        return userRepository.save(userBD.get());
     }
 
     @Override
     public List<User> findAllUsers() {
-        return null;
+        return (List<User>)userRepository.findAll();
     }
 }

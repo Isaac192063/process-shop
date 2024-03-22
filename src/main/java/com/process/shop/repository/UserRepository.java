@@ -1,6 +1,14 @@
 package com.process.shop.repository;
 
-import org.springframework.stereotype.Repository;
+import com.process.shop.model.User;
+import org.springframework.data.repository.CrudRepository;
 
-public class UserRepository {
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+
+public interface UserRepository extends CrudRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    List<User> findByFullBirthDay(LocalDate fullBirthDay);
 }
