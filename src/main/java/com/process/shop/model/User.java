@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity
 public class User {
     @Id
@@ -16,10 +16,11 @@ public class User {
     private Long id;
     private String fullName;
     private LocalDate fullBirthDay;
-    private DocumentType identificationType;
+    private String identificationType;
     private String document;
     private String phoneNumber;
     private String email;
     private String password;
-  //  private List<Address> address;
+    @OneToMany(mappedBy = "user")
+    private List<Address> address;
 }
