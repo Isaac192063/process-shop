@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(User user, Long id) {
+    public  User updateUser(User user, Long id) {
         Optional<User> userBD = userRepository.findById(id);
         if (userBD.isEmpty()){
             return null;
