@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByEmail(String email);
     List<User> findByFullBirthDay(LocalDate fullBirthDay);
+    // SELECT * FROM users WHERE email = "" AND != 2
+    Optional<User> findByEmailAndIdNot(String email, Long id);
 }
