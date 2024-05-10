@@ -3,6 +3,8 @@ package com.process.shop.controller;
 
 import com.process.shop.model.User;
 import com.process.shop.service.UserServiceImpl;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +20,21 @@ public class UserController {
     private UserServiceImpl userService;
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.createUser(user));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserByIda(@PathVariable Long id) {
+    public ResponseEntity<User> getUserByIda(@PathVariable @Positive Long id) {
         return ResponseEntity
                 .ok()
                 .body(userService.getUserById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long id) {
+    public ResponseEntity<User> updateUser(@RequestBody @Valid User user, @PathVariable  @Positive Long id) {
         return ResponseEntity.ok().body(userService.updateUser(user, id));
     }
 
